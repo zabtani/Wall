@@ -1,0 +1,96 @@
+.story,
+.previewStory {
+  width: 65%;
+  margin: 5% auto 5% auto;
+  border-radius: 12px;
+  text-align: center;
+  color: white;
+}
+.previewStory {
+  width: 32.5%;
+  margin: 0 0 2% 0;
+}
+
+.story h2,
+.previewStory h2 {
+  margin: 0;
+}
+.story h2 {
+  font-size: 350%;
+}
+.previewStory h2 {
+  font-size: 195%;
+}
+.story h3,
+.previewStory h3 {
+  margin-top: 1%;
+}
+.story h3 {
+  font-size: 170%;
+}
+.previewStory h3 {
+  font-size: 95%;
+}
+.story p,
+.previewStory p {
+  padding: 0 2% 0 2%;
+}
+.story p {
+  font-size: 130%;
+}
+.previewStory p {
+  font-size: 100%;
+}
+.story .content,
+.previewStory .content {
+  text-align: left;
+  padding: 0 2% 0 2%;
+}
+.story .media,
+.previewStory .media {
+  width: 100%;
+}
+.story .media {
+  height: 60vh;
+}
+.previewStory .media {
+  height: 32.5vh;
+}
+@media only screen and (max-width: 650px) {
+  .story {
+    width: 90%;
+  }
+  .previewStory {
+    width: 60%;
+  }
+  .story .media {
+    height: 40vh;
+  }
+  .previewStory .media {
+    height: 25.7vh;
+  }
+  .story h2 {
+    font-size: 250%;
+  }
+  .previewStory h2 {
+    font-size: 150%;
+  }
+
+  .story h3 {
+    font-size: 120%;
+  }
+  .previewStory h3 {
+    font-size: 100%;
+  }
+  .story p {
+    font-size: 100%;
+  }
+  .previewStory p {
+    font-size: 80%;
+  }
+  .story .content,
+  .previewStory .content {
+    text-align: left;
+    padding: 0 4% 0 4%;
+  }
+}

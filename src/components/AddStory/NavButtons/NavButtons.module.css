@@ -1,0 +1,28 @@
+.navigationButtons {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5%;
+}
+.navigationButtons > button {
+  width: 10vh;
+  height: 10vh;
+}
+.navigationButtons svg {
+  width: 2em !important;
+  height: 2em !important;
+}
+@media only screen and (max-width: 650px) {
+  .navigationButtons {
+    width: 100%;
+  }
+  .navigationButtons > button {
+    width: 7vh;
+    height: 7vh;
+  }
+
+  .navigationButtons svg {
+    width: 1.7em !important;
+    height: 1.7em !important;
+  }
+}
