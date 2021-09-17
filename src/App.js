@@ -74,7 +74,7 @@ function App() {
   return (
     <React.Fragment>
       <section>
-        <h1>Wall to all | Post your story</h1>
+        <h1>Wall to all </h1>
       </section>
 
       <section>
