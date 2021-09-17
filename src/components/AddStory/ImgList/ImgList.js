@@ -50,7 +50,7 @@ function ImgList(props) {
           />
         ) : (
           <span className={classes.searchBoxText}>
-            results based on title. donts like it? <br />
+            results based on title. dont like it? <br />
           </span>
         )}
         <div className={classes.buttonCon}>

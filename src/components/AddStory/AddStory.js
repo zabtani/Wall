@@ -43,6 +43,7 @@ function AddStory(props) {
   const restart = () => {
     setInputsState(initialInputsState);
     setCurrentStep(authorStep);
+    setPostBarShown(false);
   };
   const moveControlHandler = (action) => {
     function makeMove() {

@@ -2,7 +2,6 @@ import React, { useState, useCallback, useEffect } from 'react';
 import Spinner from './components/Spinner';
 import StoriesList from './components/StoriesList/StoriesList';
 import AddStory from './components/AddStory/AddStory';
-import {} from './api-helper';
 import './App.css';
 function App() {
   const [clientWidth, setClientWidth] = useState(window.innerWidth);
@@ -32,7 +31,8 @@ function App() {
         let story = data[key];
         loadedStories.push({ id: key, ...story });
       }
-      setStories(loadedStories);
+
+      setStories(loadedStories.reverse());
     } catch (error) {
       setError('Failed to reach the server');
     }
