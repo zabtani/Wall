@@ -39,7 +39,7 @@ h2 {
 }
 @media only screen and (max-width: 650px) {
   .postToggleButton {
-    font-size: 50% !important;
+    font-size: 70% !important;
     margin: 2% !important;
   }
   .postBarContent h2 {
