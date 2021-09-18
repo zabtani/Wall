@@ -40,8 +40,8 @@
     width: 95%;
   }
   .navigationButtons button {
-    width: 7vh;
-    height: 7vh;
+    width: 2.5rem;
+    height: 2.5rem;
   }
   .buttonCon .buttonText {
     margin: 12px;
