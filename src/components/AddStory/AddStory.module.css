@@ -8,31 +8,45 @@ form {
 .formError {
   color: tomato;
   font-weight: bold;
+  margin-top: 1%;
   height: 10px;
-  font-size: 80%;
+  font-size: 180%;
+  font-family: 'ZCOOL XiaoWei', serif !important  ;
 }
 h2 {
-  margin: 0;
+  margin: 1% 0 0 0;
   padding-top: 0.5%;
 }
 .postToggleButton {
-  font-size: 50% !important;
+  font-size: 80% !important;
   margin: 1% !important;
 }
-.postBarContent {
+.postBar {
+  background-image: url('../../wall_bg.jpg');
+  background-size: cover;
+
   background-color: whitesmoke;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
-.postBar {
-  min-height: 100vh;
+.postBarContent h2 {
+  padding: 1% 1% 0 1%;
+  font-size: 350%;
+}
+.postBarContent {
+  min-height: 60vh;
 }
 @media only screen and (max-width: 650px) {
   .postToggleButton {
+    font-size: 50% !important;
     margin: 2% !important;
   }
-  h2 {
+  .postBarContent h2 {
+    padding: 3% 3% 0 3%;
     font-size: 100%;
+  }
+  .formError {
+    font-size: 80%;
   }
 }

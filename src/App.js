@@ -63,7 +63,7 @@ function App() {
     content = <StoriesList stories={stories} />;
   }
   if (stories.length === 0) {
-    content = <p>No stories...</p>;
+    content = <p>Wall is empty!</p>;
   }
   if (error) {
     content = <p>{error}</p>;
@@ -74,9 +74,8 @@ function App() {
   return (
     <React.Fragment>
       <section>
-        <h1>Wall to all (: </h1>
+        <h1>Wall to all. tell your story.</h1>
       </section>
-
       <section>
         <AddStory screenWidth={clientWidth} onAddStory={addStoryHandler} />
       </section>

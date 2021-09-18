@@ -32,6 +32,11 @@
   align-items: center;
 }
 .searchBox .searchBoxText {
-  margin-top: 2%;
   font-size: 80%;
+}
+
+@media only screen and (max-width: 650px) {
+  .searchBox {
+    margin: 5%;
+  }
 }

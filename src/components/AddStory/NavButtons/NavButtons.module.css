@@ -1,28 +1,50 @@
 .navigationButtons {
+  font-family: 'ZCOOL XiaoWei', serif !important  ;
   width: 80%;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 0.5%;
+  margin: auto auto 0.5% auto;
 }
-.navigationButtons > button {
-  width: 10vh;
-  height: 10vh;
+
+.navigationButtons button {
+  background-color: rgba(128, 128, 128, 0.458);
+}
+.navigationButtons button:hover {
+  background-color: rgba(128, 128, 128, 0.858);
+}
+
+.buttonCon {
+  align-items: center;
+  display: flex;
+}
+.buttonCon .buttonText {
+  color: black;
+  font-weight: bold;
+  margin: 10px;
+}
+.navigationButtons button {
+  width: 8vh;
+  height: 8vh;
 }
 .navigationButtons svg {
-  width: 2em !important;
-  height: 2em !important;
+  width: 80%;
+  height: 80%;
 }
 @media only screen and (max-width: 650px) {
-  .navigationButtons {
-    width: 100%;
+  .navigationButtons svg {
+    width: 60%;
+    height: 60%;
   }
-  .navigationButtons > button {
+  .navigationButtons {
+    margin: 5% auto 7% auto;
+    width: 95%;
+  }
+  .navigationButtons button {
     width: 7vh;
     height: 7vh;
   }
-
-  .navigationButtons svg {
-    width: 1.7em !important;
-    height: 1.7em !important;
+  .buttonCon .buttonText {
+    margin: 12px;
+    font-size: 70%;
   }
 }

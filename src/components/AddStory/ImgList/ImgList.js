@@ -35,6 +35,7 @@ function ImgList(props) {
 
   const onSearchHandler = () => {
     changeImgHandler(searchRef.current.value);
+    onImageChoice(null);
     setSearchInputShown(false);
   };
   const primaryButtonProps = { variant: 'contained', color: 'primary' };
@@ -45,12 +46,13 @@ function ImgList(props) {
         {searchInputShown ? (
           <TextField
             inputRef={searchRef}
+            type="search"
             variant="outlined"
             label="search term.."
           />
         ) : (
           <span className={classes.searchBoxText}>
-            results based on title. dont like it? <br />
+            Dont like this results? <br />
           </span>
         )}
         <div className={classes.buttonCon}>
@@ -79,7 +81,7 @@ function ImgList(props) {
 
       {imgs.length > 0 ? (
         <ImageList
-          rowHeight={160}
+          rowHeight={props.screenWidth > 650 ? 260 : 160}
           className={classes.optionalImgs}
           cols={props.screenWidth > 650 ? 5 : 2}
         >

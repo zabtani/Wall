@@ -1,40 +1,35 @@
 import React, { useCallback, useState } from 'react';
 import classes from './AddStory.module.css';
-import ImgList from './ImgList/ImgList';
-import Button from '@material-ui/core/Button';
-import { validateControl } from './control-validation';
-import Input from './Input/Input';
 import NavButtons from './NavButtons/NavButtons';
-import Story from '../Story/Story';
+import { validateControl } from './control-validation';
+import Button from '@material-ui/core/Button';
+import Form from './Form/Form';
+
 const initialInputsState = {
-  author: '',
-  title: '',
+  author: { current: '', final: null },
+  title: { current: '', final: null },
   image: { url: null, id: null },
-  description: '',
+  description: { current: '', final: null },
 };
 function AddStory(props) {
+  //prettier-ignore
   const steps = [
-    //prettier-ignore
-    { name: 'author', title: 'Who are you?',label:"Name goes here..."  },
-    //prettier-ignore
+    { name: 'author', title: 'Who are you?',label:"Name goes here..." },
     { name: 'title', title: 'What is your story name?',label: 'Title goes here...'  },
     { name: 'image', title: 'Which image describe it the most?' },
-    //prettier-ignore
     { name: 'description', title: 'So,what happen?', label: 'Story goes here...' },
     { name: 'finish', title: 'Is that OK?' },
   ];
-  const [authorStep, titleStep, imageStep, descriptionStep, finishStep] = steps;
   const [postBarShown, setPostBarShown] = useState(false);
-  const [currentStep, setCurrentStep] = useState(authorStep);
+  const [currentStep, setCurrentStep] = useState(steps[0]);
   const [inputsState, setInputsState] = useState(initialInputsState);
-
   const [error, setError] = useState(null);
   function submitHandler(event) {
     event.preventDefault();
     const story = {
-      author: inputsState.author,
-      title: inputsState.title,
-      description: inputsState.description,
+      author: inputsState.author.final,
+      title: inputsState.title.final,
+      description: inputsState.description.final,
       image: inputsState.image.url,
     };
     props.onAddStory(story);
@@ -42,25 +37,10 @@ function AddStory(props) {
   }
   const restart = () => {
     setInputsState(initialInputsState);
-    setCurrentStep(authorStep);
+    setCurrentStep(steps[0]);
     setPostBarShown(false);
   };
-  const moveControlHandler = (action) => {
-    function makeMove() {
-      const stepValue = action === 'next' ? 1 : -1;
-      const nextControlIdx =
-        steps.map((step) => step.name).indexOf(currentStep.name) + stepValue;
-      setCurrentStep(steps[nextControlIdx]);
-    }
-    setError(null);
-    if (action === 'next') {
-      const checkValue = inputsState[currentStep.name];
-      let isError = validateControl(currentStep.name, checkValue);
-      !isError ? makeMove() : setError(isError);
-    } else {
-      makeMove();
-    }
-  };
+
   const onImageChoiceHandler = useCallback((img) => {
     setInputsState((prevState) => {
       return {
@@ -70,87 +50,73 @@ function AddStory(props) {
     });
   }, []);
 
-  const textInputsSteps = [authorStep, titleStep, descriptionStep];
-  const imageInputDisplay =
-    currentStep.name === imageStep.name ? 'block' : 'none';
-
-  const inputChangeHandler = (name, value) => {
+  const updateInputHandler = (name, event) => {
+    let value = event.target.value;
+    let eventName = event._reactName;
     setInputsState((prevState) => {
-      return { ...prevState, [name]: value };
+      let update;
+      if (eventName === 'onChange') {
+        update = { ...prevState[name], current: value };
+      } else if (eventName === 'onBlur') {
+        update = { ...prevState[name], final: value };
+      }
+      return {
+        ...prevState,
+        [name]: update,
+      };
     });
     setError(null);
   };
+  const togglePostBarHandler = () => {
+    postBarShown ? restart() : setPostBarShown((prevState) => !prevState);
+  };
+  const onStepChangeHandler = (stepName) => {
+    const step = steps.filter((step) => step.name === stepName)[0];
+    setCurrentStep(step);
+  };
+  const onStepValidationHandler = (name) => {
+    const checkValue =
+      name === 'image' ? inputsState.image : inputsState[name].current;
+    let result = validateControl(name, checkValue);
+    return result;
+  };
   return (
-    <div className={classes.postBarContent}>
+    <div className={classes.postBar}>
+      {postBarShown && (
+        <div className={classes.postBarContent}>
+          <h2>{currentStep.title}</h2>
+          <div className={classes.formError} style={{ opacity: error ? 1 : 0 }}>
+            {error}
+          </div>
+          <NavButtons
+            currentStep={currentStep.name}
+            steps={steps.map((step) => step.name)}
+            onStepChange={(stepName) => onStepChangeHandler(stepName)}
+            onStepValidation={onStepValidationHandler}
+            onError={setError}
+            error={error}
+          />
+          <Form
+            currentStep={currentStep.name}
+            inputs={inputsState}
+            steps={steps}
+            onSubmit={submitHandler}
+            updateInput={updateInputHandler}
+            onImageChoice={onImageChoiceHandler}
+            screenWidth={props.screenWidth}
+          />
+        </div>
+      )}
       <Button
         style={{ alignSelf: postBarShown ? 'flex-start ' : 'center' }}
         variant="contained"
         color="primary"
         className={classes.postToggleButton}
-        onClick={() => setPostBarShown(!postBarShown)}
+        onClick={togglePostBarHandler}
       >
-        {!postBarShown ? 'post your story!' : 'fold'}
+        {!postBarShown ? 'post your story!' : 'cancel'}
       </Button>
-      {postBarShown && (
-        <div className={classes.postBar}>
-          <h2>{currentStep.title}</h2>
-          <div className={classes.formError} style={{ opacity: error ? 1 : 0 }}>
-            {error}
-          </div>
-
-          <form onSubmit={submitHandler}>
-            <NavButtons
-              currentStep={currentStep.name}
-              finishStep={finishStep.name}
-              moveControl={moveControlHandler}
-              error={error}
-            />
-            {textInputsSteps.map((step) => {
-              return (
-                <Input
-                  key={step.name}
-                  name={step.name}
-                  current={currentStep.name}
-                  label={step.label}
-                  screenWidth={props.screenWidth}
-                  onChange={(e) =>
-                    inputChangeHandler(step.name, e.target.value)
-                  }
-                  value={inputsState[step.name]}
-                />
-              );
-            })}
-            <ImgList
-              display={imageInputDisplay}
-              chosenImg={inputsState.image ? inputsState.image.id : null}
-              onImageChoice={onImageChoiceHandler}
-              searchTerm={inputsState.title}
-              screenWidth={props.screenWidth}
-            />
-            {currentStep.name === finishStep.name && (
-              <>
-                <Story
-                  preview={true}
-                  title={inputsState.title}
-                  author={inputsState.author}
-                  description={inputsState.description}
-                  image={inputsState.image.url}
-                />
-                <Button
-                  variant="contained"
-                  color="primary"
-                  type="submit"
-                  className={classes.clickToSearch}
-                >
-                  Looks good. Post It!
-                </Button>
-              </>
-            )}
-          </form>
-        </div>
-      )}
     </div>
   );
 }
 export default AddStory;
-///trim values before search img

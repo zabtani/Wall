@@ -1,18 +1,19 @@
 .story,
 .previewStory {
-  width: 65%;
+  width: 50%;
   margin: 5% auto 5% auto;
   border-radius: 12px;
   text-align: center;
   color: white;
 }
 .previewStory {
-  width: 32.5%;
+  width: 25%;
   margin: 0 0 2% 0;
 }
 
 .story h2,
 .previewStory h2 {
+  font-weight: bolder;
   margin: 0;
 }
 .story h2 {
@@ -31,10 +32,7 @@
 .previewStory h3 {
   font-size: 95%;
 }
-.story p,
-.previewStory p {
-  padding: 0 2% 0 2%;
-}
+
 .story p {
   font-size: 130%;
 }
@@ -51,10 +49,10 @@
   width: 100%;
 }
 .story .media {
-  height: 60vh;
+  height: 80vh;
 }
 .previewStory .media {
-  height: 32.5vh;
+  height: 40vh;
 }
 @media only screen and (max-width: 650px) {
   .story {
@@ -70,23 +68,26 @@
     height: 25.7vh;
   }
   .story h2 {
-    font-size: 250%;
+    font-size: 180%;
   }
   .previewStory h2 {
     font-size: 150%;
   }
 
   .story h3 {
+    font-size: 100%;
+  }
+  .previewStory h2 {
     font-size: 120%;
   }
   .previewStory h3 {
-    font-size: 100%;
+    font-size: 80%;
   }
   .story p {
-    font-size: 100%;
+    font-size: 80%;
   }
   .previewStory p {
-    font-size: 80%;
+    font-size: 60%;
   }
   .story .content,
   .previewStory .content {
