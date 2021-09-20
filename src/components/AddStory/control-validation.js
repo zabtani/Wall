@@ -6,31 +6,31 @@ export const validateControl = (name, value) => {
   let error = null;
   if (name === 'image') {
     if (value === null) {
-      error = 'must choose an image';
+      error = 'Must choose an image';
     }
   } else {
     const trimmedValue = value.trim();
     switch (name) {
       case 'author':
         if (trimmedValue === '') {
-          error = 'provide your name above.';
+          error = 'Provide your name below';
         } else if (
           regex.containSpecialChars.test(trimmedValue) ||
           regex.containDigit.test(trimmedValue)
         ) {
-          error = 'provide name with out spiceal chars or digits';
+          error = 'Provide name without special chars or digits';
         } else if (trimmedValue.length < 2) {
-          error = 'this name is too short.';
+          error = 'Name is too short.';
         }
         break;
       case 'title':
         if (trimmedValue === '') {
-          error = 'provide your title above.';
+          error = 'Provide title below';
         }
         break;
       case 'description':
         if (trimmedValue === '') {
-          error = 'provide your description above.';
+          error = 'Provide your story below.';
         }
         break;
       default:

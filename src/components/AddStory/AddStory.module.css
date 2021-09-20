@@ -22,10 +22,7 @@ h2 {
   margin: 1% !important;
 }
 .postBar {
-  background-image: url('../../wall_bg.jpg');
-  background-size: cover;
-
-  background-color: whitesmoke;
+  /* background-color: whitesmoke; */
   display: flex;
   flex-direction: column;
   justify-content: center;

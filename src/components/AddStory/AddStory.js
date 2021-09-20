@@ -14,10 +14,10 @@ const initialInputsState = {
 function AddStory(props) {
   //prettier-ignore
   const steps = [
-    { name: 'author', title: 'Who are you?',label:"Name goes here..." },
-    { name: 'title', title: 'What is your story name?',label: 'Title goes here...'  },
-    { name: 'image', title: 'Which image describe it the most?' },
-    { name: 'description', title: 'So,what happen?', label: 'Story goes here...' },
+    { name: 'author', title: 'Who are you?',label:"Your name" },
+    { name: 'title', title: 'What is your story name?',label: 'Story title'  },
+    { name: 'image', title: 'Which image describes it the most?' },
+    { name: 'description', title: 'So,what happen?', label: 'Your story' },
     { name: 'finish', title: 'Is that OK?' },
   ];
   const [postBarShown, setPostBarShown] = useState(false);
