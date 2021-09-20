@@ -20,6 +20,9 @@ section:first-of-type {
 }
 
 @media only screen and (max-width: 650px) {
+  section:last-of-type {
+    padding-top: 2%;
+  }
   section:first-of-type {
     font-size: 40%;
   }

@@ -18,7 +18,7 @@
   display: flex;
 }
 .buttonCon .buttonText {
-  color: black;
+  color: rgb(0, 0, 0);
   font-weight: bold;
   margin: 10px;
 }
@@ -36,7 +36,7 @@
     height: 60%;
   }
   .navigationButtons {
-    margin: 5% auto 7% auto;
+    margin: 5% auto 1% auto;
     width: 95%;
   }
   .navigationButtons button {

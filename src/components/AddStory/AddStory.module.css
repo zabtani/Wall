@@ -30,8 +30,9 @@ form {
   font-size: 200%;
 }
 .postBarContent {
-  min-height: 60vh;
+  min-height: 50vh;
 }
+
 @media only screen and (max-width: 650px) {
   .postToggleButton {
     font-size: 70% !important;
@@ -39,9 +40,10 @@ form {
   }
   .postBarContent h2 {
     padding: 3% 3% 0 3%;
-    font-size: 100%;
+    font-size: 110%;
   }
   .formError {
+    margin-top: 2%;
     font-size: 80%;
   }
 }

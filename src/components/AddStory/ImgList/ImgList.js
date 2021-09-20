@@ -11,6 +11,7 @@ function ImgList(props) {
   const [searchInputShown, setSearchInputShown] = useState(false);
   const [onSearch, setOnSearch] = useState(false);
   const { onImageChoice } = props;
+  const gotResults = imgs.length > 0;
   const changeImgHandler = async (term) => {
     setOnSearch(true);
     setImgs([]);
@@ -46,15 +47,16 @@ function ImgList(props) {
   return (
     <div className={classes.optionalImgsCon} style={{ display: props.display }}>
       <div className={classes.searchBox}>
-        {searchInputShown ? (
+        {searchInputShown && (
           <TextField
             inputRef={searchRef}
             type="search"
             variant="outlined"
             label="search term.."
           />
-        ) : (
-          <span className={classes.searchBoxText}>
+        )}
+        {gotResults && !searchInputShown && (
+          <span className={classes.imgsListText}>
             Dont like this results? <br />
           </span>
         )}
@@ -83,7 +85,7 @@ function ImgList(props) {
         </div>
       </div>
 
-      {imgs.length > 0 ? (
+      {gotResults ? (
         <ImageList
           rowHeight={props.screenWidth > 650 ? 260 : 160}
           className={classes.optionalImgs}
@@ -108,10 +110,10 @@ function ImgList(props) {
             );
           })}
         </ImageList>
-      ) : onSearch ? (
-        'searching'
       ) : (
-        'couldent find optional images for your story title.'
+        <span className={classes.imgsListText}>
+          {onSearch ? 'Searching...' : 'couldent find optional images.'}
+        </span>
       )}
     </div>
   );
