@@ -3,7 +3,7 @@ import classes from './ImgList.module.css';
 import Spinner from '../../Spinner';
 import { getRandomImgs } from '../../../api-helper';
 import { Button, ImageList, ImageListItem, TextField } from '@material-ui/core';
-
+import SearchIcon from '@material-ui/icons/Search';
 function ImgList(props) {
   const searchRef = useRef();
   const [loaded, setLoaded] = useState([]);
@@ -34,9 +34,12 @@ function ImgList(props) {
   };
 
   const onSearchHandler = () => {
-    changeImgHandler(searchRef.current.value);
-    onImageChoice(null);
-    setSearchInputShown(false);
+    const searchValue = searchRef.current.value;
+    if (searchValue) {
+      changeImgHandler(searchValue);
+      onImageChoice(null);
+      setSearchInputShown(false);
+    }
   };
   const primaryButtonProps = { variant: 'contained', color: 'primary' };
   const secButtonProps = { variant: 'contained', color: 'secondary' };
@@ -58,21 +61,22 @@ function ImgList(props) {
         <div className={classes.buttonCon}>
           {!searchInputShown ? (
             <Button
+              startIcon={<SearchIcon />}
               {...primaryButtonProps}
               onClick={() => setSearchInputShown(true)}
             >
-              click to search
+              Click to search
             </Button>
           ) : (
             <>
               <Button {...primaryButtonProps} onClick={() => onSearchHandler()}>
-                search
+                Search
               </Button>
               <Button
                 {...secButtonProps}
                 onClick={() => setSearchInputShown(false)}
               >
-                cancel
+                Cancel
               </Button>
             </>
           )}

@@ -1,222 +1,42 @@
-import React, { useCallback, useState } from 'react';
-import classes from './AddStory.module.css';
-import ImgList from './ImgList/ImgList';
-import Button from '@material-ui/core/Button';
-import { validateControl } from './control-validation';
-import Input from './Input/Input';
-import NavButtons from './NavButtons/NavButtons';
-import Story from '../Story/Story';
-const initialInputsState = {
-  author: { current: '', final: null },
-  title: { current: '', final: null },
-  image: { url: null, id: null },
-  description: { current: '', final: null },
-};
-function AddStory(props) {
-  const steps = [
-    //prettier-ignore
-    { name: 'author', title: 'Who are you?',label:"Name goes here..."  },
-    //prettier-ignore
-    { name: 'title', title: 'What is your story name?',label: 'Title goes here...'  },
-    { name: 'image', title: 'Which image describe it the most?' },
-    //prettier-ignore
-    { name: 'description', title: 'So,what happen?', label: 'Story goes here...' },
-    { name: 'finish', title: 'Is that OK?' },
-  ];
-  const [authorStep, titleStep, imageStep, descriptionStep, finishStep] = steps;
-  const [postBarShown, setPostBarShown] = useState(false);
-  const [currentStep, setCurrentStep] = useState(authorStep);
-  const [inputsState, setInputsState] = useState(initialInputsState);
-
-  const [error, setError] = useState(null);
-  function submitHandler(event) {
-    event.preventDefault();
-    const story = {
-      author: inputsState.author.final,
-      title: inputsState.title.final,
-      description: inputsState.description.final,
-      image: inputsState.image.url,
-    };
-    props.onAddStory(story);
-    restart();
-  }
-  const restart = () => {
-    setInputsState(initialInputsState);
-    setCurrentStep(authorStep);
-    setPostBarShown(false);
-  };
-  const moveControlHandler = (action) => {
+import React from 'react';
+import NavButton from './NavButton';
+import classes from './NavButtons.module.css';
+const NavButtons = (props) => {
+  const { currentStep, steps, error, onError } = props;
+  const moveHandler = (action) => {
     function makeMove() {
       const stepValue = action === 'next' ? 1 : -1;
-      const nextControlIdx =
-        steps.map((step) => step.name).indexOf(currentStep.name) + stepValue;
-      setCurrentStep(steps[nextControlIdx]);
+      const nextIdx = steps.indexOf(currentStep) + stepValue;
+      props.onStepChange(steps[nextIdx]);
     }
-    setError(null);
+    props.onError(null);
     if (action === 'next') {
-      const checkValue =
-        currentStep.name === 'image'
-          ? inputsState.image
-          : inputsState[currentStep.name].current;
-      let isError = validateControl(currentStep.name, checkValue);
+      let isError = props.onStepValidation(currentStep);
       if (!isError) {
         makeMove();
       } else {
-        setError(isError);
+        onError(isError);
         setTimeout(() => {
-          setError(false);
+          onError(false);
         }, 1500);
       }
     } else {
       makeMove();
     }
   };
-  const onImageChoiceHandler = useCallback((img) => {
-    setInputsState((prevState) => {
-      return {
-        ...prevState,
-        image: img,
-      };
-    });
-  }, []);
-
-  const textInputsSteps = [authorStep, titleStep, descriptionStep];
-  const imageInputDisplay =
-    currentStep.name === imageStep.name ? 'block' : 'none';
-
-  const updateInputHandler = (name, event) => {
-    let value = event.target.value;
-    let eventName = event._reactName;
-    setInputsState((prevState) => {
-      let update;
-      if (eventName === 'onChange') {
-        update = { ...prevState[name], current: value };
-      } else if (eventName === 'onBlur') {
-        update = { ...prevState[name], final: value };
-      }
-      return {
-        ...prevState,
-        [name]: update,
-      };
-    });
-    setError(null);
+  const isFirstStep = currentStep === steps[0];
+  const isLsatStep = currentStep === steps[steps.length - 1];
+  const navStyle = {
+    justifyContent: !isFirstStep ? 'space-between' : 'flex-end',
   };
-  const togglePostBarHandler = () => {
-    if (postBarShown) {
-      restart();
-    } else {
-      setPostBarShown((prevState) => !prevState);
-    }
-  };
-  return (
-    <div className={classes.postBar}>
-      {postBarShown && (
-        <div className={classes.postBarContent}>
-          <h2>{currentStep.title}</h2>
-          <div className={classes.formError} style={{ opacity: error ? 1 : 0 }}>
-            {error}
-          </div>
-
-          <form onSubmit={submitHandler}>
-            <NavButtons
-              currentStep={currentStep.name}
-              finishStep={finishStep.name}
-              moveControl={moveControlHandler}
-              error={error}
-            />
-            {textInputsSteps.map((step) => {
-              return (
-                <Input
-                  key={step.name}
-                  name={step.name}
-                  current={currentStep.name}
-                  label={step.label}
-                  screenWidth={props.screenWidth}
-                  onChange={(event) => updateInputHandler(step.name, event)}
-                  onBlur={(event) => updateInputHandler(step.name, event)}
-                  value={inputsState[step.name].current}
-                />
-              );
-            })}
-            <ImgList
-              display={imageInputDisplay}
-              chosenImg={inputsState.image ? inputsState.image.id : null}
-              onImageChoice={onImageChoiceHandler}
-              searchTerm={inputsState.title.final}
-              screenWidth={props.screenWidth}
-            />
-            {currentStep.name === finishStep.name && (
-              <>
-                <Story
-                  preview={true}
-                  title={inputsState.title.final}
-                  author={inputsState.author.final}
-                  description={inputsState.description.final}
-                  image={inputsState.image.url}
-                />
-                <Button
-                  variant="contained"
-                  color="primary"
-                  type="submit"
-                  className={classes.clickToSearch}
-                >
-                  Looks good. Post It!
-                </Button>
-              </>
-            )}
-          </form>
-        </div>
-      )}
-      <Button
-        style={{ alignSelf: postBarShown ? 'flex-start ' : 'center' }}
-        variant="contained"
-        color="primary"
-        className={classes.postToggleButton}
-        onClick={togglePostBarHandler}
-      >
-        {!postBarShown ? 'post your story!' : 'cancel'}
-      </Button>
-    </div>
-  );
-}
-export default AddStory;
-///trim values before search img
-
-///////////////////////////////////////
-import React from 'react';
-import Fab from '@material-ui/core/Fab';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
-import classes from './NavButtons.module.css';
-const NavButtons = (props) => {
-  const { currentStep, finishStep, error, moveControl } = props;
 
   return (
-    <div
-      className={classes.navigationButtons}
-      style={{
-        justifyContent: currentStep !== 'author' ? 'space-between' : 'flex-end',
-      }}
-    >
-      {currentStep !== 'author' && (
-        <div className={classes.buttonCon}>
-          <Fab color="primary" onClick={() => moveControl('back')}>
-            <NavigateBeforeIcon />
-          </Fab>{' '}
-          <span className={classes.buttonText}>Back</span>
-        </div>
+    <div className={classes.navigationButtons} style={navStyle}>
+      {!isFirstStep && (
+        <NavButton move={moveHandler} isNext={false} error={false} />
       )}
-      {currentStep !== finishStep && (
-        <div className={classes.buttonCon}>
-          <span className={classes.buttonText}>Next</span>
-          <Fab
-            color="primary"
-            style={{ backgroundColor: error ? 'red' : null }}
-            onClick={() => moveControl('next')}
-          >
-            <NavigateNextIcon />
-          </Fab>
-        </div>
+      {!isLsatStep && (
+        <NavButton move={moveHandler} isNext={true} error={error} />
       )}
     </div>
   );

@@ -1,14 +1,15 @@
 .story,
 .previewStory {
   width: 50%;
-  margin: 5% auto 5% auto;
+  margin: 2% auto 5% auto;
   border-radius: 12px;
   text-align: center;
   color: white;
 }
+
 .previewStory {
   width: 25%;
-  margin: 0 0 2% 0;
+  margin: 1% 0 2% 0;
 }
 
 .story h2,
@@ -56,9 +57,11 @@
 }
 @media only screen and (max-width: 650px) {
   .story {
+    margin-top: 5%;
     width: 90%;
   }
   .previewStory {
+    margin-top: 4%;
     width: 60%;
   }
   .story .media {

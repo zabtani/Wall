@@ -3,6 +3,7 @@ import ImgList from '../ImgList/ImgList';
 import Input from './Input';
 import Story from '../../Story/Story';
 import Button from '@material-ui/core/Button';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 
 const Form = (props) => {
   const { currentStep, inputs, steps, onSubmit } = props;
@@ -34,6 +35,14 @@ const Form = (props) => {
       />
       {isLastStep && (
         <>
+          <Button
+            startIcon={<ThumbUpIcon />}
+            variant="contained"
+            color="primary"
+            type="submit"
+          >
+            Sure, Post It!
+          </Button>
           <Story
             preview={true}
             title={inputs.title.final}
@@ -41,9 +50,6 @@ const Form = (props) => {
             description={inputs.description.final}
             image={inputs.image.url}
           />
-          <Button variant="contained" color="primary" type="submit">
-            Looks good. Post It!
-          </Button>
         </>
       )}
     </form>

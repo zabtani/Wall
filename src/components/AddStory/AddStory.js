@@ -4,6 +4,8 @@ import NavButtons from './NavButtons/NavButtons';
 import { validateControl } from './control-validation';
 import Button from '@material-ui/core/Button';
 import Form from './Form/Form';
+import WhatshotIcon from '@material-ui/icons/Whatshot';
+import CloseIcon from '@material-ui/icons/Close';
 
 const initialInputsState = {
   author: { current: '', final: null },
@@ -113,8 +115,9 @@ function AddStory(props) {
         color="primary"
         className={classes.postToggleButton}
         onClick={togglePostBarHandler}
+        startIcon={!postBarShown ? <WhatshotIcon /> : <CloseIcon />}
       >
-        {!postBarShown ? 'post your story!' : 'cancel'}
+        {!postBarShown ? 'Post your story' : 'Cancel'}
       </Button>
     </div>
   );

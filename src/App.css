@@ -11,3 +11,16 @@ section p {
 button:focus {
   outline: none;
 }
+
+section:first-of-type {
+  background-color: rgba(0, 0, 0, 0.065);
+  text-align: center;
+  padding: 0.25%;
+  font-size: 70%;
+}
+
+@media only screen and (max-width: 650px) {
+  section:first-of-type {
+    font-size: 40%;
+  }
+}
