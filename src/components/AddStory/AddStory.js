@@ -90,14 +90,7 @@ function AddStory(props) {
           <div className={classes.formError} style={{ opacity: error ? 1 : 0 }}>
             {error}
           </div>
-          <NavButtons
-            currentStep={currentStep.name}
-            steps={steps.map((step) => step.name)}
-            onStepChange={(stepName) => onStepChangeHandler(stepName)}
-            onStepValidation={onStepValidationHandler}
-            onError={setError}
-            error={error}
-          />
+
           <Form
             currentStep={currentStep.name}
             inputs={inputsState}
@@ -107,8 +100,17 @@ function AddStory(props) {
             onImageChoice={onImageChoiceHandler}
             screenWidth={props.screenWidth}
           />
+          <NavButtons
+            currentStep={currentStep.name}
+            steps={steps.map((step) => step.name)}
+            onStepChange={(stepName) => onStepChangeHandler(stepName)}
+            onStepValidation={onStepValidationHandler}
+            onError={setError}
+            error={error}
+          />
         </div>
       )}
+
       <Button
         style={{ alignSelf: postBarShown ? 'flex-start ' : 'center' }}
         variant="contained"

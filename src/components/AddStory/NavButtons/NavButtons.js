@@ -23,6 +23,7 @@ const NavButtons = (props) => {
     } else {
       makeMove();
     }
+    window.scrollTo(0, 0);
   };
   const isFirstStep = currentStep === steps[0];
   const isLsatStep = currentStep === steps[steps.length - 1];

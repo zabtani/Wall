@@ -19,7 +19,7 @@ const Input = (props) => {
       width: isDescription ? descriptionWidth : standartWidth,
       display: props.current === props.name ? 'flex' : 'none',
     },
-    rows: isDescription ? 10 : 1,
+    rows: isDescription ? 5 : 1,
   };
   return isDescription ? (
     <TextField {...inputProps} multiline />

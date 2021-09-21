@@ -23,8 +23,8 @@
   margin: 10px;
 }
 .navigationButtons button {
-  width: 8vh;
-  height: 8vh;
+  width: 4rem;
+  height: 4rem;
 }
 .navigationButtons svg {
   width: 80%;
@@ -36,7 +36,7 @@
     height: 60%;
   }
   .navigationButtons {
-    margin: 5% auto 1% auto;
+    margin: 5% auto 10% auto;
     width: 95%;
   }
   .navigationButtons button {
