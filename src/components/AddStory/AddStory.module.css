@@ -5,15 +5,6 @@ form {
   padding: 1% 2% 2% 2%;
 }
 
-.formError {
-  color: tomato;
-  font-weight: bold;
-  margin-top: 1%;
-  height: 10px;
-  font-size: 150%;
-  font-family: 'ZCOOL XiaoWei', serif !important  ;
-}
-
 .postToggleButton {
   font-size: 80% !important;
   margin: 1% !important;
@@ -38,9 +29,5 @@ form {
   .postBarContent h2 {
     padding: 3% 3% 0 3%;
     font-size: 110%;
-  }
-  .formError {
-    margin-top: 2%;
-    font-size: 80%;
   }
 }

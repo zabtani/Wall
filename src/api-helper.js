@@ -18,3 +18,26 @@ export const getRandomImgs = async (searchTerm) => {
   }
   return result;
 };
+
+export const getStories = (getFunc, transformFunc) => {
+  getFunc(
+    {
+      url: 'https://react-http-de690-default-rtdb.firebaseio.com/stories.json',
+    },
+    transformFunc
+  );
+};
+
+export const postStory = (postFunc, createFunc, story) => {
+  postFunc(
+    {
+      url: 'https://react-http-de690-default-rtdb.firebaseio.com/stories.json',
+      method: 'POST',
+      body: story,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+    createFunc.bind(null, story)
+  );
+};

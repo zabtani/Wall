@@ -43,4 +43,3 @@ const NavButtons = (props) => {
   );
 };
 export default NavButtons;
-///trim values before search img

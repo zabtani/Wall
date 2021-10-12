@@ -3,10 +3,12 @@ import ImgList from '../ImgList/ImgList';
 import Input from './Input';
 import Story from '../../Story/Story';
 import Button from '@material-ui/core/Button';
+import SentimentDissatisfiedIcon from '@material-ui/icons/SentimentDissatisfied';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import Spinner from '../../Spinner';
 
 const Form = (props) => {
-  const { currentStep, inputs, steps, onSubmit } = props;
+  const { currentStep, inputs, steps, onSubmit, reqLoading, reqError } = props;
   const [authorStep, titleStep, imageStep, descriptionStep, finishStep] = steps;
   const textInputsSteps = [authorStep, titleStep, descriptionStep];
   const imageInputDisplay = currentStep === imageStep.name ? 'block' : 'none';
@@ -33,23 +35,34 @@ const Form = (props) => {
         searchTerm={inputs.title.final}
         screenWidth={props.screenWidth}
       />
+
       {isLastStep && (
         <>
-          <Button
-            startIcon={<ThumbUpIcon />}
-            variant="contained"
-            color="primary"
-            type="submit"
-          >
-            Sure, Post It!
-          </Button>
-          <Story
-            preview={true}
-            title={inputs.title.final}
-            author={inputs.author.final}
-            description={inputs.description.final}
-            image={inputs.image.url}
-          />
+          {!reqLoading && (
+            <Button
+              startIcon={
+                reqError ? <SentimentDissatisfiedIcon /> : <ThumbUpIcon />
+              }
+              variant="contained"
+              color="primary"
+              type="submit"
+            >
+              {reqError ? 'try again' : 'Sure, Post It!'}
+            </Button>
+          )}
+          {reqError ? (
+            <b> {reqError} </b>
+          ) : !reqLoading ? (
+            <Story
+              preview={true}
+              title={inputs.title.final}
+              author={inputs.author.final}
+              description={inputs.description.final}
+              image={inputs.image.url}
+            />
+          ) : (
+            <Spinner />
+          )}
         </>
       )}
     </form>

@@ -1,6 +1,6 @@
 .story,
 .previewStory {
-  width: 50%;
+  width: 60%;
   margin: 2% auto 5% auto;
   border-radius: 12px;
   text-align: center;
@@ -55,7 +55,8 @@
 .previewStory .media {
   height: 40vh;
 }
-@media only screen and (max-width: 650px) {
+
+@media only screen and (max-width: 850px) {
   .story {
     margin-top: 5%;
     width: 90%;

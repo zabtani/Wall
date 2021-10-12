@@ -6,7 +6,8 @@ import Button from '@material-ui/core/Button';
 import Form from './Form/Form';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
 import CloseIcon from '@material-ui/icons/Close';
-
+import useHttp from '../../hooks/use-http';
+import { postStory } from '../../api-helper';
 const initialInputsState = {
   author: { current: '', final: null },
   title: { current: '', final: null },
@@ -14,10 +15,9 @@ const initialInputsState = {
   description: { current: '', final: null },
 };
 function AddStory(props) {
-  //prettier-ignore
   const steps = [
-    { name: 'author', title: 'Who are you?',label:"Your name" },
-    { name: 'title', title: 'What is your story name?',label: 'Story title'  },
+    { name: 'author', title: 'Who are you?', label: 'Your name' },
+    { name: 'title', title: 'What is your story name?', label: 'Story title' },
     { name: 'image', title: 'Which image describes it the most?' },
     { name: 'description', title: 'So,what happen?', label: 'Your story' },
     { name: 'finish', title: 'Is that OK?' },
@@ -25,7 +25,14 @@ function AddStory(props) {
   const [postBarShown, setPostBarShown] = useState(false);
   const [currentStep, setCurrentStep] = useState(steps[0]);
   const [inputsState, setInputsState] = useState(initialInputsState);
-  const [error, setError] = useState(null);
+  // prettier-ignore
+  const { sendRequest: post, error: reqError,isLoading,restartReq} = useHttp();
+  const createTask = (story, storyData) => {
+    const generatedId = storyData.name;
+    const createdStory = { id: generatedId, ...story };
+    props.onAddStory(createdStory);
+    restart();
+  };
   function submitHandler(event) {
     event.preventDefault();
     const story = {
@@ -34,13 +41,13 @@ function AddStory(props) {
       description: inputsState.description.final,
       image: inputsState.image.url,
     };
-    props.onAddStory(story);
-    restart();
+    postStory(post, createTask, story);
   }
   const restart = () => {
     setInputsState(initialInputsState);
     setCurrentStep(steps[0]);
     setPostBarShown(false);
+    restartReq();
   };
 
   const onImageChoiceHandler = useCallback((img) => {
@@ -67,7 +74,7 @@ function AddStory(props) {
         [name]: update,
       };
     });
-    setError(null);
+    errorHandler(null);
   };
   const togglePostBarHandler = () => {
     postBarShown ? restart() : setPostBarShown((prevState) => !prevState);
@@ -82,14 +89,14 @@ function AddStory(props) {
     let result = validateControl(name, checkValue);
     return result;
   };
+  const errorHandler = (error) => {
+    props.onError(error);
+  };
   return (
     <div className={classes.postBar}>
       {postBarShown && (
         <div className={classes.postBarContent}>
           <h2>{currentStep.title}</h2>
-          <div className={classes.formError} style={{ opacity: error ? 1 : 0 }}>
-            {error}
-          </div>
 
           <Form
             currentStep={currentStep.name}
@@ -99,18 +106,19 @@ function AddStory(props) {
             updateInput={updateInputHandler}
             onImageChoice={onImageChoiceHandler}
             screenWidth={props.screenWidth}
+            reqLoading={isLoading}
+            reqError={reqError}
           />
           <NavButtons
             currentStep={currentStep.name}
             steps={steps.map((step) => step.name)}
             onStepChange={(stepName) => onStepChangeHandler(stepName)}
             onStepValidation={onStepValidationHandler}
-            onError={setError}
-            error={error}
+            onError={errorHandler}
+            error={props.error}
           />
         </div>
       )}
-
       <Button
         style={{ alignSelf: postBarShown ? 'flex-start ' : 'center' }}
         variant="contained"
