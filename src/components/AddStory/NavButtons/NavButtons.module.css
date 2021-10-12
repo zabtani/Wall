@@ -30,7 +30,6 @@
   width: 80%;
   height: 80%;
 }
-
 @media only screen and (max-width: 650px) {
   .navigationButtons svg {
     width: 60%;
@@ -41,9 +40,10 @@
     width: 95%;
   }
   .navigationButtons button {
-    width: 3.5rem;
-    height: 3.5rem;
+    width: 65px;
+    height: 65px;
   }
+
   .buttonCon .buttonText {
     margin: 12px;
     font-size: 70%;

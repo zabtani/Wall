@@ -35,6 +35,7 @@ b {
     padding-top: 2%;
   }
   section:first-of-type {
+    min-height: 2vh;
     font-size: 40%;
   }
 }
